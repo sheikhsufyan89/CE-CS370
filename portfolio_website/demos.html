@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <title>My YouTube Video</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header>
+      <h1>My Projects</h1>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="portfolio/index.html">Portfolio</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="projects.html">Projects</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <h2>Project 1: AI Social Chatbot</h2>
+
+      <p>
+        Sakeena AI - A social chatbot designed to provide personalized
+        matchmaking to make friends.
+      </p>
+
+      <h3 id="videoTitle"></h3>
+
+      <div id="videoContainer"></div>
+    </main>
+
+    <script>
+      const API_KEY = "AIzaSyAdtp01JfrrbJlcVfMD4C7LFRoqJd6U7Xw";
+      const VIDEO_ID = "ylSgB1tSg5M";
+
+      async function loadVideo() {
+        try {
+          const url =
+            `https://www.googleapis.com/youtube/v3/videos` +
+            `?part=snippet` +
+            `&id=${VIDEO_ID}` +
+            `&key=${API_KEY}`;
+
+          const response = await fetch(url);
+          const data = await response.json();
+
+          console.log("YOUTUBE RESPONSE:", data);
+
+          if (!data.items || data.items.length === 0) {
+            console.error("Video not found");
+            return;
+          }
+
+          const video = data.items[0];
+
+          document.getElementById("videoTitle").innerText = video.snippet.title;
+
+          document.getElementById("videoContainer").innerHTML = `
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/${video.id}"
+              title="${video.snippet.title}"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          `;
+        } catch (error) {
+          console.error("Request failed:", error);
+        }
+      }
+
+      loadVideo();
+    </script>
+  </body>
+</html>

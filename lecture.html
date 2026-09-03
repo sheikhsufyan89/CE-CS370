@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Web storage api</title>
+  </head>
+
+  <body>
+    <h1>Web storage api</h1>
+    <p>Save your name in the browser <code>Local Storage</code></p>
+    <label for="name">Enter your name:</label>
+    <input type="text" id="name" name="name" />
+    <label for="age">Enter your age:</label>
+    <input type="number" id="age" name="age" />
+    <button id="saveButton" type="button">Save</button>
+    <button id="clearButton" type="button">Clear name</button>
+    <p id="message"></p>
+    <script>
+      const nameInput = document.getElementById("name");
+      const ageInput = document.getElementById("age");
+      const message = document.getElementById("message");
+
+      function showSavedName() {
+        const savedName = localStorage.getItem("name");
+        const savedAge = localStorage.getItem("age");
+        if (savedName && savedAge) {
+          message.textContent = `Saved name: ${savedName}, Age: ${savedAge}`;
+        } else {
+          message.textContent = "No name or age saved.";
+        }
+      }
+
+      document.getElementById("saveButton").addEventListener("click", () => {
+        const name = nameInput.value.trim();
+        const age = ageInput.value.trim();
+        if (name && age) {
+          localStorage.setItem("name", name);
+          localStorage.setItem("age", age);
+          showSavedName();
+        } else {
+          message.textContent = "Please enter both a name and an age to save.";
+        }
+      });
+
+      document.getElementById("clearButton").addEventListener("click", () => {
+        localStorage.removeItem("name");
+        localStorage.removeItem("age");
+        showSavedName();
+      });
+    </script>
+  </body>
+</html>
