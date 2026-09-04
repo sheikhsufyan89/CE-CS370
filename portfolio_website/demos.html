@@ -1,11 +1,16 @@
+```html
 <!doctype html>
 <html>
   <head>
-    <title>My YouTube Video</title>
+    <title>My YouTube Videos</title>
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
-    <header><h1>My Projects</h1></header>
+    <header>
+      <h1>My Projects</h1>
+    </header>
+
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
@@ -14,56 +19,86 @@
         <li><a href="demos.html">Demos</a></li>
       </ul>
     </nav>
+
     <main>
       <h2>Project Demos</h2>
+
       <div class="videos-container">
         <div class="video-card">
           <h3>Sakeena AI</h3>
+
           <p>
             Sakeena AI - A social chatbot designed to provide personalized
             matchmaking to make friends.
           </p>
-          <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/ylSgB1tSg5M"
-            title="Sakeena AI Demo"
-            allow="
-              accelerometer;
-              autoplay;
-              clipboard-write;
-              encrypted-media;
-              gyroscope;
-              picture-in-picture;
-            "
-            allowfullscreen
-          >
-          </iframe>
+
+          <h4 id="sakeenaVideoTitle"></h4>
+
+          <div id="sakeenaVideoContainer"></div>
         </div>
+
         <div class="video-card">
           <h3>Clue AI and Zippie Live Commerce</h3>
+
           <p>
             A Y Combinator application video featuring Clue AI, a multi-agent
             consumer simulation platform, and the Zippie live commerce MVP.
           </p>
-          <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/ON0FcQiNDIM&t"
-            title="Clue AI and Zippie Live Commerce Demo"
-            allow="
-              accelerometer;
-              autoplay;
-              clipboard-write;
-              encrypted-media;
-              gyroscope;
-              picture-in-picture;
-            "
-            allowfullscreen
-          >
-          </iframe>
+
+          <h4 id="clueVideoTitle"></h4>
+
+          <div id="clueVideoContainer"></div>
         </div>
       </div>
     </main>
+
+    <script>
+      const API_KEY = "AIzaSyAdtp01JfrrbJlcVfMD4C7LFRoqJd6U7Xw";
+
+      const SAKEENA_VIDEO_ID = "ylSgB1tSg5M";
+      const CLUE_VIDEO_ID = "ON0FcQiNDIM";
+
+      async function loadVideo(videoId, titleId, containerId) {
+        try {
+          const url =
+            `https://www.googleapis.com/youtube/v3/videos` +
+            `?part=snippet` +
+            `&id=${videoId}` +
+            `&key=${API_KEY}`;
+
+          const response = await fetch(url);
+          const data = await response.json();
+
+          console.log("YOUTUBE RESPONSE:", data);
+
+          if (!data.items || data.items.length === 0) {
+            console.error("Video not found");
+            return;
+          }
+
+          const video = data.items[0];
+
+          document.getElementById(titleId).innerText = video.snippet.title;
+
+          document.getElementById(containerId).innerHTML = `
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/${video.id}"
+              title="${video.snippet.title}"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          `;
+        } catch (error) {
+          console.error("Request failed:", error);
+        }
+      }
+
+      loadVideo(SAKEENA_VIDEO_ID, "sakeenaVideoTitle", "sakeenaVideoContainer");
+
+      loadVideo(CLUE_VIDEO_ID, "clueVideoTitle", "clueVideoContainer");
+    </script>
   </body>
 </html>
+```
