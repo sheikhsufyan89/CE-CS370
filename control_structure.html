@@ -105,5 +105,56 @@
         document.write("</p>");
       </script>
     </div>
+    <div>
+      <script>
+        let Class = 370;
+        let dday = "Thursday";
+
+        switch (Class) {
+          case 370:
+            switch (dday) {
+              case "Monday":
+                document.write("<p>CECS 370 is on Monday</p>");
+                break;
+              case "Tuesday":
+                document.write("<p>CECS 370 is on Tuesday</p>");
+                break;
+              case "Wednesday":
+                document.write("<p>CECS 370 is on Wednesday</p>");
+                break;
+              case "Thursday":
+                document.write("<p>CECS 370 is on Thursday</p>");
+                break;
+              case "Friday":
+                document.write("<p>CECS 370 is on Friday</p>");
+                break;
+              default:
+                document.write("<p>Invalid day</p>");
+            }
+
+            break;
+
+          default:
+            document.write("<p>Some other class</p>");
+        }
+      </script>
+    </div>
+    <div>
+      <script>
+        document.write("<table border='1'>");
+        for (let i = 1; i <= 10; i++) {
+          document.write("<tr><td>" + i + " x 11 = " + i * 11 + "</td></tr>");
+        }
+        document.write("</table>");
+      </script>
+    </div>
+    <div>
+      <script>
+        const array = ["ali", "sufyan", "ahmed", "hassan"];
+        for (let i = 0; i < array.length; i++) {
+          document.write("<p>" + array[i] + "</p>");
+        }
+      </script>
+    </div>
   </body>
 </html>
