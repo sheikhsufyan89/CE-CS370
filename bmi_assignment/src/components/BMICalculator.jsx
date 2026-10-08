@@ -17,11 +17,11 @@ function BMICalculator() {
     const w = Number(weight);
     const h = Number(height);
 
-    if (!Number.isFinite(w) || !Number.isFinite(h) || w <= 0 || h <= 0) {
-      setError("Weight and height must be positive numbers.");
-      setBmi(null);
-      return;
-    }
+    // if (!Number.isFinite(w) || !Number.isFinite(h) || w <= 0 || h <= 0) {
+    //   setError("Weight and height must be positive numbers.");
+    //   setBmi(null);
+    //   return;
+    // }
 
     let result;
 
@@ -87,7 +87,14 @@ function BMICalculator() {
           type="number"
           placeholder="Enter weight"
           value={weight}
-          onChange={(e) => setWeight(e.target.value)}
+          onChange={(e) => {
+            if (e.target.value < 0) {
+              setError("Weight and height must be positive numbers.");
+              setBmi(null);
+              return;
+            }
+            setWeight(e.target.value);
+          }}
         />
       </div>
 
@@ -98,7 +105,14 @@ function BMICalculator() {
           type="number"
           placeholder="Enter height"
           value={height}
-          onChange={(e) => setHeight(e.target.value)}
+          onChange={(e) => {
+            if (e.target.value < 0) {
+              setError("Weight and height must be positive numbers.");
+              setBmi(null);
+              return;
+            }
+            setHeight(e.target.value);
+          }}
         />
       </div>
 
